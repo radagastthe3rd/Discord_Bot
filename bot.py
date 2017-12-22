@@ -19,7 +19,7 @@ alertsOn = True
 messages_waiting_to_send = []
 users_to_ignore = ["radagastthe3rd", "Nightbot", "Kaybear 🐻", "Dalooka", "Sigmar", "cculhane", "cactusfuzz", "slimy529"]
 
-#v1.01
+#v1.02
 
 @bot.event
 async def on_ready():

@@ -192,7 +192,7 @@ async def on(context):
     if messages_waiting_to_send:
         await log_msg_to_Discord_pm(await pad_message("Suppressed Notifications", False), False)
         while messages_waiting_to_send:
-            msg = messages_waiting_to_send.pop()
+            msg = messages_waiting_to_send.pop(0)   # pop from FRONT of list
             await log_msg_to_Discord_pm(msg, False)
         await  log_msg_to_Discord_pm(await pad_message("End", False), False)
 

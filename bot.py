@@ -1,3 +1,5 @@
+#v1.03
+
 import discord
 from discord.ext import commands
 from datetime import datetime
@@ -18,8 +20,6 @@ bot = commands.Bot(command_prefix='!', description=description)
 alertsOn = True
 messages_waiting_to_send = []
 users_to_ignore = ["radagastthe3rd", "Nightbot", "Kaybear 🐻", "Dalooka", "Sigmar", "cculhane", "cactusfuzz", "slimy529"]
-
-#v1.02
 
 @bot.event
 async def on_ready():
@@ -109,22 +109,23 @@ async def on_member_ban(member: discord.Member):
 @bot.event
 async def on_member_join(member):
 
+    msg = str(member.name) + " has joined " + str(member.server.name) + "!"
     '''
-    pos = 0
-    channel = next(iter(member.server.channels.values()))
-    while channel.type != discord.ChannelType.text:
-        pos += 1
-        channel = list(member.server.channels)
+    # pleb_role = discord.utils.get(member.server.roles, name="Plebs")
+
+    print("CHANNELS:")
+    print(list(member.server.channels))
+
+    dc = member.server.default_channel
+    print(dc)
+    print(type(dc))
+    
+    await bot.send_message(dc, "Welcome " + member.name + " to " + member.server.name + "!")
     '''
-    msg = str(member.name) + " has joined " + str(member.server) + "!"
-
-    pleb_role = discord.utils.get(member.server.roles, name="Plebs")
-
-    await bot.send_message(member.server, "Welcome " + member.name + " to " + member.server.name + "!")
     await log_msg_to_Discord_pm(msg)
     await log_user_activity_to_file(str(member.name), msg)
 
-    await bot.add_roles(member, pleb_role)
+    # await bot.add_roles(member, pleb_role)
 
 
 @bot.event
@@ -140,7 +141,7 @@ async def on_member_remove(member: discord.Member):
     '''
     msg = str(member.name) + " has left " + str(member.server)
 
-    await bot.send_message(member.server, msg + ", may he rest in peace.", tts=True)
+    # await bot.send_message(member.server, msg + ", may he rest in peace.", tts=True)
     await log_msg_to_Discord_pm(msg)
     await log_user_activity_to_file(str(member.name), msg)
 
@@ -192,7 +193,7 @@ async def on(context):
         await log_msg_to_Discord_pm(await pad_message("Suppressed Notifications", False), False)
         while messages_waiting_to_send:
             msg = messages_waiting_to_send.pop()
-            await log_msg_to_Discord_pm(msg)
+            await log_msg_to_Discord_pm(msg, False)
         await  log_msg_to_Discord_pm(await pad_message("End", False), False)
 
 
